@@ -1,3 +1,10 @@
+"""
+Local AI Inference API
+- FastAPI
+- Hugging Face Transformers
+- CPU-based LLM serving
+"""
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForCausalLM
