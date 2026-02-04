@@ -23,13 +23,10 @@ tokenizer = AutoTokenizer.from_pretrained(
 tokenizer.pad_token = tokenizer.eos_token
 # tokenizer.pad_token_id = tokenizer.eos_token_id   # usually 32000 anyway
 
-print("Loading model...5")
-
-
 print("Loading model...")
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
-    torch_dtype=torch.float32,
+    dtype=torch.float32,
 )
 model = model.to("cpu")
 
