@@ -1,10 +1,12 @@
-"""
-Local AI Inference API
-- FastAPI
-- Hugging Face Transformers
-- CPU-based LLM serving
-"""
 
+# Local AI Inference API
+# - FastAPI
+# - Hugging Face Transformers
+# - CPU-based LLM serving
+
+
+
+# Importing packages 
 from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -12,6 +14,8 @@ import torch
 
 app = FastAPI()
 
+
+#We will be using the phi-2 model
 MODEL_NAME = "microsoft/phi-2"
 
 print("Loading model...")
@@ -24,8 +28,11 @@ print("Model loaded.")
 
 class GenerateRequest(BaseModel):
     prompt: str
-    max_tokens: int = 100
+    max_tokens: int = 50
 
+
+
+#API call for sending prompt and getting response
 @app.post("/generate")
 def generate_text(req: GenerateRequest):
     inputs = tokenizer(req.prompt, return_tensors="pt")
