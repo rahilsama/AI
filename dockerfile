@@ -1,23 +1,20 @@
-FROM python:3.10-slim
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Prevent Python from writing pyc files
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
+# Install dependencies
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Copy project files to the container
 WORKDIR /app
+COPY . /app
 
-# Install system dependencies (needed by torch sometimes)
-RUN apt-get update && apt-get install -y \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements first (layer caching)
-COPY requirements.txt .
-RUN python -m pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
-COPY . .
-
+# Expose port 8000 for the FastAPI app
 EXPOSE 8000
 
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Run tests and start the application
+CMD ["pytest", "main.py"] && uvicorn main:app --host 0.0.0.0 --port 8000
