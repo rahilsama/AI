@@ -61,3 +61,7 @@ def generate_text(req: GenerateRequest):
 
     text = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return {"response": text}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
