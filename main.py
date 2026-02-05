@@ -14,7 +14,6 @@ tokenizer = AutoTokenizer.from_pretrained(
 
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
-    dtype=torch.float32,
 )
 model = model.to("cpu")
 
