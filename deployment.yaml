@@ -1,18 +1,32 @@
-containers:
-  - name: local-ai-api
-    image: local-ai-api:latest
-    imagePullPolicy: IfNotPresent
-    ports:
-      - containerPort: 8000
-    readinessProbe:
-      httpGet:
-        path: /health
-        port: 8000
-      initialDelaySeconds: 10
-      periodSeconds: 5
-    livenessProbe:
-      httpGet:
-        path: /health
-        port: 8000
-      initialDelaySeconds: 30
-      periodSeconds: 10
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-ai-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: local-ai-api
+  template:
+    metadata:
+      labels:
+        app: local-ai-api
+    spec:
+      containers:
+        - name: local-ai-api
+          image: local-ai-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10

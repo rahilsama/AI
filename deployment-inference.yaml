@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-ai-inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: local-ai-inference
+  template:
+    metadata:
+      labels:
+        app: local-ai-inference
+    spec:
+      containers:
+        - name: local-ai-inference
+          image: local-ai-inference:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+
+
